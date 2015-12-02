@@ -44,6 +44,7 @@ background: white;
 			<div class="col-sm-12" style="padding: 0px;">
 				<ul class="nav nav-tabs nav-justified">
 					<li role="presentation" class="active"><a class="act" href="api">Article</a></li>
+					<li role="presentation"><a href="loginhelp">User Login</a></li>
 					<li role="presentation"><a href="userarticlepage">User Article</a></li>
 					<li role="presentation"><a href="adminuser">Admin User</a></li>
 				</ul>

@@ -47,6 +47,7 @@ li:hover {
 			<div class="col-sm-12" style="padding: 0px;">
 				<ul class="nav nav-tabs nav-justified">
 					<li role="presentation"><a class="act" href="api">Article</a></li>
+					<li role="presentation"><a href="loginhelp">User Login</a></li>
 					<li role="presentation"><a href="userarticlepage">User
 							Article</a></li>
 					<li role="presentation" class="active"><a href="adminuser">Admin
@@ -59,7 +60,7 @@ li:hover {
 			style="margin: 5px auto; padding: 0px; box-shadow: -1px -1px 3px gray;">
 			<!--row3  -->
 			<div class="col-sm-12">
-				<h4 style="color: red; text-align: center;">Save Article:
+				<h4 style="color: red; text-align: center;">Add User:
 					Method POST</h4>
 				<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/admin/user/</h4>
 			</div>
@@ -84,7 +85,7 @@ li:hover {
 			<!--row4  -->
 			<div class="col-sm-12">
 				<div class="col-sm-12">
-					<h4 style="color: red; text-align: center;">Update Article:
+					<h4 style="color: red; text-align: center;">Update User:
 						Method PUT</h4>
 					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/admin/user/</h4>
 				</div>

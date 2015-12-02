@@ -50,7 +50,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         dataSource.setUsername("zvupnhuombgswl");
         dataSource.setPassword("-kobcgryVQZKMWcEYKs5jblNgX");
         
-        /*dataSource.setUrl("jdbc:postgresql://localhost:5432/articledb");
+  /*      dataSource.setUrl("jdbc:postgresql://localhost:5432/articledb");
         dataSource.setUsername("postgres");
         dataSource.setPassword("12345");*/
         return dataSource;

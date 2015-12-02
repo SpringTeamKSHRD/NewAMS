@@ -18,4 +18,8 @@ public class MainController {
 	public String apiPage3() {
 		return "adminuser";
 	}
+	@RequestMapping(value = "/loginhelp")
+	public String apiLogin() {
+		return "loginhelp";
+	}
 }
