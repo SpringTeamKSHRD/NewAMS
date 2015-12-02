@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -60,7 +61,7 @@ public class AdminUserController {
 		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 */
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> addUser(UserDto user) {
 		System.out.println("add controller.");		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -74,7 +75,7 @@ public class AdminUserController {
 			map.put("STATUS", HttpStatus.NOT_FOUND.value());
 			return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		}
-	}
+	}*/
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable("id") int id) {
@@ -123,76 +124,88 @@ public class AdminUserController {
 		}
 	}
 
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> search(UserSearch us) {
+	@RequestMapping(value = { "/" }, method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> adminUserFuntion(UserDto user) {
 		List<UserDto> listUser =null;
 		Map<String, Object> map = new HashMap<String, Object>();
-		HttpStatus status = null;
-		switch(us.getKeyword()){
-		
+		switch(user.getKey()){
+		case "SAVE":
+			if (userService.insertUser(user)) {			
+				map.put("MESSAGE", "USER HAS BEEN CREATED.");
+				map.put("STATUS", HttpStatus.CREATED.value());
+			} else {
+				map.put("MESSAGE", "USER HAS NOT BEEN CREATED.");
+				map.put("STATUS", HttpStatus.NOT_FOUND.value());
+			}
+			break;
 		case "S":
-			listUser=userService.search(us);
+			listUser=userService.search(user);
 			if (listUser.isEmpty()) {
 				map.put("MESSAGE", "RECORD NOT FOUND.");
 				map.put("STATUS", HttpStatus.FOUND.value());
-				status = HttpStatus.OK;
 			} else {
 				map.put("RESPONSE_DATA", listUser);
 				map.put("STATUS", HttpStatus.FOUND.value());
-				status = HttpStatus.OK;
 			}
 			break;
 		case "R":
-			listUser=userService.list(us);
+			listUser=userService.list(user);
 			if (listUser.isEmpty()) {
 				map.put("MESSAGE", "RECORD NOT FOUND.");
 				map.put("STATUS", HttpStatus.FOUND.value());
-				status = HttpStatus.OK;
 			} else {
 				map.put("RESPONSE_DATA", listUser);
 				map.put("STATUS", HttpStatus.FOUND.value());
-				status = HttpStatus.OK;
+
 			}
 		}
-		return new ResponseEntity<Map<String, Object>>(map, status);
+		return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "uploadprofile")
-	public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+	public ResponseEntity<Map<String, Object>> addArticle(@RequestParam("file") MultipartFile file,
+			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String filename = file.getOriginalFilename();
-		System.out.println(filename);
+		// file upload
 		if (!file.isEmpty()) {
 			try {
+
+				UUID uuid = UUID.randomUUID();
+				String originalFilename = file.getOriginalFilename();
+				String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+				String randomUUIDFileName = uuid.toString();
+
+				String filename = randomUUIDFileName + "." + extension;
+
 				byte[] bytes = file.getBytes();
+
 				// creating the directory to store file
-				String savePath = request.getSession().getServletContext()
-						.getRealPath("resources/upload/profile");
+				String savePath = request.getSession().getServletContext().getRealPath("/resources/upload/profile");
+				System.out.println(savePath);
 				File path = new File(savePath);
 				if (!path.exists()) {
 					path.mkdir();
 				}
+
 				// creating the file on server
 				File serverFile = new File(savePath + File.separator + filename);
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(serverFile));
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-				logger.info("Server File Location="
-						+ serverFile.getAbsolutePath());
+				System.out.println(serverFile.getAbsolutePath());
+				System.out.println("You are successfully uploaded file " + filename);
 				map.put("MESSAGE", "UPLOAD IMAGE SUCCESSFUL");
 				map.put("STATUS", HttpStatus.CREATED.value());
 				map.put("RESPONE_DATA", savePath);
 				return new ResponseEntity<Map<String, Object>>(map,
 						HttpStatus.OK);
 			} catch (Exception e) {
-				System.out.println("You are failed to upload " + filename
-						+ " => " + e.getMessage());
+				System.out.println("You are failed to upload  => " + e.getMessage());
 			}
-		} else {
-			System.out.println("You are failed to upload " + filename
-					+ " because the file was empty!");
 		}
+
+		// end file upload
+
 		map.put("MESSAGE", "FILE CAN'T UPLOAD");
 		map.put("STATUS", HttpStatus.NOT_ACCEPTABLE.value());
 		return new ResponseEntity<Map<String, Object>>(map,

@@ -54,7 +54,7 @@ background: white;
 			<!--row3  -->
 			<div class="col-sm-12">
 					<h4 style="color:red; text-align: center;">Get Article List: Method GET</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/article/</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/article/</h4>
 			</div>
 			<div class="col-sm-12" style="margin:0px 0px 10px 0px;">
 					<textarea rows="5" cols="auto" class="form-control" id="textget"></textarea>
@@ -64,7 +64,7 @@ background: white;
 					</button>
 			</div>
 			<div class="col-sm-12" style="margin:0px 0px 10px 0px;">
-					<textarea rows="20" style="color:blue;"" cols="auto" class="form-control" id="display1"></textarea>
+					<textarea rows="20" style="color:blue;" cols="auto" class="form-control" id="display1"></textarea>
 			</div>
 		</div>
 		<!--end row3  -->
@@ -73,7 +73,7 @@ background: white;
 			<div class="col-sm-12">
 				<div class="col-sm-12">
 					<h4 style="color:red; text-align: center;">Search Article: Method GET</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/article/</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/article/</h4>
 			</div>
 			<div class="col-sm-12" style="margin-bottom: 10px;">
 					<textarea rows="10" cols="auto" class="form-control" id="textget2"></textarea>
@@ -93,7 +93,7 @@ background: white;
 			<div class="col-sm-12">
 				<div class="col-sm-12">
 					<h4 style="color:red; text-align: center;">Get Article Detail: Method GET</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/article/{id}</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/article/{id}</h4>
 			</div>
 			<div class="col-sm-12" style="margin-bottom: 10px;">
 					<input type="text"  class="form-control" id="textget3"/>
@@ -117,7 +117,7 @@ background: white;
 	    function send1(){
 	    	var json=JSON.parse($("#textget").val());
 	    	 $.ajax({
-	    		type : "GET",
+	    		type : "POST",
 	    		url : "${pageContext.request.contextPath}/api/article/",
 	    		dataType : 'json',
 	    		data : json,
@@ -137,7 +137,7 @@ background: white;
 	    function send2(){
 	    	var json=JSON.parse($("#textget2").val());
 	    	 $.ajax({
-	    		type : "GET",
+	    		type : "POST",
 	    		url : "${pageContext.request.contextPath}/api/article/",
 	    		dataType : 'json',
 	    		data : json,

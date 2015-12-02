@@ -13,6 +13,12 @@ public class UserDto {
 	private String gender;
 	private String image;
 	
+	private String columnName;
+	private String key;
+	private int limit;
+	private int page;
+	private String keyword;
+	
 	
 	private int role_id;
 	
@@ -82,5 +88,46 @@ public class UserDto {
 	public void setRole_id(int role_id) {
 		this.role_id = role_id;
 	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	@Override
+	public String toString() {
+		return "UserDto [id=" + id + ", username=" + username + ", password="
+				+ password + ", enable=" + enable + ", email=" + email
+				+ ", address=" + address + ", phone=" + phone + ", name="
+				+ name + ", gender=" + gender + ", image=" + image
+				+ ", columnName=" + columnName + ", key=" + key + ", limit="
+				+ limit + ", page=" + page + ", keyword=" + keyword
+				+ ", role_id=" + role_id + "]";
+	}
+	
 	
 }

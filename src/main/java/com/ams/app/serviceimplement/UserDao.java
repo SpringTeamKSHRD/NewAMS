@@ -23,7 +23,7 @@ public class UserDao implements UserService {
 	}
 
 	@Override
-	public ArrayList<UserDto> list(UserSearch us) {
+	public ArrayList<UserDto> list(UserDto us) {
 		if(us.getPage()<=0) us.setPage(1);
 		int offset = us.getLimit() * us.getPage()- us.getLimit();
 		UserDto user = null;
@@ -277,7 +277,7 @@ public class UserDao implements UserService {
 	}
 		
 	@Override
-	public ArrayList<UserDto> search(UserSearch us) {
+	public ArrayList<UserDto> search(UserDto us) {
 		if(us.getPage()<=0) us.setPage(1);
 		int offset = us.getLimit() * us.getPage() - us.getLimit();
 		ArrayList<UserDto> list = new ArrayList<>();
@@ -288,7 +288,7 @@ public class UserDao implements UserService {
 				+ " LIMIT ? OFFSET ?";
 		try (Connection conn = dataSource.getConnection(); 
 			PreparedStatement ps = conn.prepareStatement(sql);) {
-			ps.setString(1, "%" + us.getKey().toLowerCase() + "%");
+			ps.setString(1, "%" + us.getKeyword().toLowerCase() + "%");
 			ps.setInt(2, us.getLimit());
 			ps.setInt(3, offset);
 			ResultSet rs = ps.executeQuery();
@@ -354,5 +354,4 @@ public class UserDao implements UserService {
 		}
 		return false;
 	}
-
 }

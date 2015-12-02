@@ -7,7 +7,7 @@ import com.ams.app.entities.UserSearch;
 
 public interface UserService {
 	
-	public ArrayList<UserDto> list(UserSearch us);
+	public ArrayList<UserDto> list(UserDto user);
 	public boolean insertUser(UserDto user);
 	public boolean updateUser(UserDto user);
 	public UserDto getUser(int id);
@@ -15,6 +15,6 @@ public interface UserService {
 	public int getTotalPage(int limit);
 	public boolean toggle(int artId);	//toggle between enable/disable an article		
 	public UserDto showUser(String usrName);
-	public ArrayList<UserDto> search(UserSearch us);
+	public ArrayList<UserDto> search(UserDto us);
 	public int getLastID();
 }

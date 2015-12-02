@@ -16,12 +16,12 @@ import com.ams.app.entities.ArticleDto;
 import com.ams.app.serviceimplement.ClientDao;
 
 @RestController
-@RequestMapping(value="/api/article",method=RequestMethod.GET)
+@RequestMapping(value="/api/article")
 public class ClientController {
 	@Autowired
 	private ClientDao dao;
 	
-	@RequestMapping(value="/")
+	@RequestMapping(value="/",method=RequestMethod.POST)
 	public ResponseEntity<Map<String,Object>> articleFunction(ArticleDto art){
 		Map<String, Object> map = new HashMap<String, Object>();
 		ResponseEntity<Map<String,Object>> resentity=null;

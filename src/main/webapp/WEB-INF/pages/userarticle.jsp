@@ -61,7 +61,7 @@ li:hover {
 			<div class="col-sm-12">
 				<h4 style="color: red; text-align: center;">Save Article:
 					Method POST</h4>
-				<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/user/userarticle</h4>
+				<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/user/userarticle</h4>
 			</div>
 			<div class="col-sm-12" style="margin: 0px 0px 10px 0px;">
 			    <form action="">
@@ -74,7 +74,7 @@ li:hover {
 				</button>
 			</div>
 			<div class="col-sm-12" style="margin: 0px 0px 10px 0px;">
-				<textarea rows="4" style="color: blue;" " cols="auto"
+				<textarea rows="4" style="color: blue;"  cols="auto"
 					class="form-control" id="display1"></textarea>
 			</div>
 		</div>
@@ -86,7 +86,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Update Article:
 						Method PUT</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/user/userarticle</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/user/userarticle</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 				    <form action="">
@@ -99,7 +99,7 @@ li:hover {
 					</button>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
-					<textarea rows="4" style="color: blue;" " cols="auto"
+					<textarea rows="4" style="color: blue;" cols="auto"
 						class="form-control" id="display2"></textarea>
 				</div>
 			</div>
@@ -112,7 +112,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Change Article
 						Status: Method PUT</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/user/userarticle</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/user/userarticle</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 					<textarea rows="4" class="form-control" id="textget3"></textarea>
@@ -134,7 +134,7 @@ li:hover {
 			<div class="col-sm-12">
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Search Article: Method GET</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/user/userarticle</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/user/userarticle</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 					<textarea rows="10" class="form-control" id="textget4"></textarea>
@@ -157,7 +157,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Get Article
 						Detail: Method GET</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/user/userarticle</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/user/userarticle</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 					<textarea rows="4" class="form-control" id="textget5"></textarea>
@@ -180,7 +180,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Delete Article
 						: Method DELETE</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/user/userarticle</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/user/userarticle</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 					<input type="text" class="form-control" id="textget6"/>
@@ -201,9 +201,9 @@ li:hover {
 	
 	//Save Article
 		$("#textget").val(JSON.stringify({
+			key:"SAVE",
 			title : "Spring Framework",
 			content : "I'm spring framework",
-			//image : "article.jpg",
 			userid : 2
 		}, null, '\t'));
 		function send1() {
@@ -289,7 +289,7 @@ li:hover {
 		function send4() {
 			var json=JSON.parse($("#textget4").val());
 			$.ajax({
-						type : "GET",
+						type : "POST",
 						url : "${pageContext.request.contextPath}/api/user/userarticle",
 						dataType : 'json',
 						data : json,
@@ -304,12 +304,12 @@ li:hover {
 		}
 		$("#textget5").val(JSON.stringify({
 			key:"DT",
-			id:2,
+			id:2
 		}, null, '\t'));
 		function send5() {
 			var json=JSON.parse($("#textget5").val());
 			$.ajax({
-						type : "GET",
+						type : "POST",
 						url : "${pageContext.request.contextPath}/api/user/userarticle",
 						dataType : 'json',
 						data : json,

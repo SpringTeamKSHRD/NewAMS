@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,8 +37,10 @@ public class AuthorController {
 
 	@RequestMapping(value = "userarticle", method = RequestMethod.POST)
 	public Object authorArticleFuntion1(ArticleDto art) {
-		Map<String, Object> map = new HashMap<String, Object>();
 		ResponseEntity<Map<String, Object>> resentity = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		switch(art.getKey()){
+		case "SAVE":
 			if (dao.add(art)) {
 				map.put("MESSAGE", "ARTICLE HAS BEEN SAVED");
 				map.put("STATUS", HttpStatus.ACCEPTED.value());
@@ -49,6 +52,56 @@ public class AuthorController {
 				resentity = new ResponseEntity<Map<String, Object>>(map,
 						HttpStatus.OK);
 			}
+			break;
+		case "GR":
+			int nr = dao.getRowNumber(art);
+			if (nr != 0) {
+				map.put("MESSAGE", "ARTICLE WAS FOUND: " + nr);
+				map.put("STATUS", HttpStatus.FOUND.value());
+				map.put("RESPONE_DATA", nr);
+				resentity = new ResponseEntity<Map<String, Object>>(map,
+						HttpStatus.OK);
+			} else {
+				map.put("MESSAGE", "ARTICLE NOT FOUND");
+				map.put("STATUS", HttpStatus.NOT_FOUND.value());
+				resentity = new ResponseEntity<Map<String, Object>>(map,
+						HttpStatus.OK);
+			}
+			break;
+		case "S":
+			List<ArticleDto> list = dao.search(art);
+			if (list.isEmpty()) {
+				map.put("MESSAGE", "ARTICLE NOT FOUND");
+				map.put("STATUS", HttpStatus.NOT_FOUND.value());
+				resentity = new ResponseEntity<Map<String, Object>>(map,
+						HttpStatus.OK);
+			} else {
+				map.put("MESSAGE", "ARTICLE WAS FOUND");
+				map.put("STATUS", HttpStatus.FOUND.value());
+				map.put("RESPONE_DATA", list);
+				resentity = new ResponseEntity<Map<String, Object>>(map,
+						HttpStatus.OK);
+			}
+			break;
+		
+		case "DT":
+			ArticleDto article = dao.show(art);
+			if (article != null) {
+				map.put("MESSAGE", "ARTICLE HAS BEEN FOUND");
+				map.put("STATUS", HttpStatus.FOUND.value());
+				map.put("RESPONE_DATA", article);
+				resentity = new ResponseEntity<Map<String, Object>>(map,
+						HttpStatus.OK);
+			} else {
+				map.put("MESSAGE", "ARTICLE NOT FOUND");
+				map.put("STATUS", HttpStatus.NOT_FOUND.value());
+				resentity = new ResponseEntity<Map<String, Object>>(map,
+						HttpStatus.OK);
+			}
+			break;
+			
+		}
+		
 		return resentity;
 	}
 	@RequestMapping(value = "userarticle", method = RequestMethod.PUT)
@@ -85,7 +138,7 @@ public class AuthorController {
 		}
 		return resentity;
 	}
-	@RequestMapping(value = "userarticle", method = RequestMethod.GET)
+	/*@RequestMapping(value = "userarticle", method = RequestMethod.GET)
 	public Object authorArticleFuntion3(ArticleDto art) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		ResponseEntity<Map<String, Object>> resentity = null;
@@ -138,7 +191,7 @@ public class AuthorController {
 			break;
 		}
 		return resentity;
-	}
+	}*/
 	@RequestMapping(value = "/userarticle/{id}", method = RequestMethod.DELETE)
 	public Object authorArticleFuntion4(@PathVariable("id") int artId) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -157,46 +210,55 @@ public class AuthorController {
 		return resentity;
 	}
 	@RequestMapping(method = RequestMethod.POST, value = "uploadimage")
-	public ResponseEntity<Map<String, Object>> uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+	public ResponseEntity<Map<String, Object>> addArticle(@RequestParam("file") MultipartFile file,
+			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String filename = file.getOriginalFilename();
-		System.out.println(filename);
+		// file upload
 		if (!file.isEmpty()) {
 			try {
+
+				UUID uuid = UUID.randomUUID();
+				String originalFilename = file.getOriginalFilename();
+				String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+				String randomUUIDFileName = uuid.toString();
+
+				String filename = randomUUIDFileName + "." + extension;
+
 				byte[] bytes = file.getBytes();
+
 				// creating the directory to store file
-				String savePath = request.getSession().getServletContext()
-						.getRealPath("resources/upload/images");
+				String savePath = request.getSession().getServletContext().getRealPath("/resources/upload/images");
+				System.out.println(savePath);
 				File path = new File(savePath);
 				if (!path.exists()) {
 					path.mkdir();
 				}
+
 				// creating the file on server
 				File serverFile = new File(savePath + File.separator + filename);
-				BufferedOutputStream stream = new BufferedOutputStream(
-						new FileOutputStream(serverFile));
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
-				logger.info("Server File Location="
-						+ serverFile.getAbsolutePath());
+				System.out.println(serverFile.getAbsolutePath());
+				System.out.println("You are successfully uploaded file " + filename);
 				map.put("MESSAGE", "UPLOAD IMAGE SUCCESSFUL");
 				map.put("STATUS", HttpStatus.CREATED.value());
 				map.put("RESPONE_DATA", savePath);
 				return new ResponseEntity<Map<String, Object>>(map,
 						HttpStatus.OK);
 			} catch (Exception e) {
-				System.out.println("You are failed to upload " + filename
-						+ " => " + e.getMessage());
+				System.out.println("You are failed to upload  => " + e.getMessage());
 			}
-		} else {
-			System.out.println("You are failed to upload " + filename
-					+ " because the file was empty!");
 		}
+
+		// end file upload
+
 		map.put("MESSAGE", "FILE CAN'T UPLOAD");
 		map.put("STATUS", HttpStatus.NOT_ACCEPTABLE.value());
 		return new ResponseEntity<Map<String, Object>>(map,
 				HttpStatus.NOT_ACCEPTABLE);
 	}
+
 
 	/*
 	  @RequestMapping(value = "/addarticle", method = RequestMethod.POST)

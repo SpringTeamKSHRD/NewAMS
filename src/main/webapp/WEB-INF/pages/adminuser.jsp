@@ -61,7 +61,7 @@ li:hover {
 			<div class="col-sm-12">
 				<h4 style="color: red; text-align: center;">Save Article:
 					Method POST</h4>
-				<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/admin/user/</h4>
+				<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/admin/user/</h4>
 			</div>
 			<div class="col-sm-12" style="margin: 0px 0px 10px 0px;">
 			    <form action="">
@@ -86,7 +86,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Update Article:
 						Method PUT</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/admin/user/</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/admin/user/</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 				     <form action="">
@@ -112,7 +112,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Get User
 						Detail: Method GET</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/admin/user/{id}</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/admin/user/{id}</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 					<input type="text" class="form-control" id="textget3" />
@@ -135,7 +135,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Search User:
 						Method GET</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/admin/user/</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/admin/user/</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 					<textarea rows="7" cols="auto" class="form-control" id="textget4"></textarea>
@@ -158,7 +158,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">Delete User
 						Detail: Method DELETE</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/admin/user/{id}</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/admin/user/{id}</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 					<input type="text" class="form-control" id="textget5" />
@@ -182,7 +182,7 @@ li:hover {
 				<div class="col-sm-12">
 					<h4 style="color: red; text-align: center;">List User:
 						Method GET</h4>
-					<h4 style="text-align: center; color: green;">URL:http://localhost:8080/ArticleManagement/api/admin/user/</h4>
+					<h4 style="text-align: center; color: green;">URL:http://team-master.herokuapp.com/api/admin/user/</h4>
 				</div>
 				<div class="col-sm-12" style="margin-bottom: 10px;">
 					<textarea rows="5" cols="auto" class="form-control" id="textget6"></textarea>
@@ -201,6 +201,7 @@ li:hover {
 	<script type="text/javascript">
 	  //Save
 		$("#textget").val(JSON.stringify({
+			key:"SAVE",
 			name : "Nem Sopheak",
 			gender : "f",
 			email : "nemsopheak123@yahoo.com",
@@ -311,15 +312,15 @@ li:hover {
 		
 		//Search User
 		$("#textget4").val(JSON.stringify({
-			keyword:"S",
-			key:"l",
+			key:"S",
+			keyword:"l",
 			limit:10,
 			page:1,
 			columnName:"name"
 		}, null, '\t'));
 		function send4() {
 			$.ajax({
-				type : "GET",
+				type : "POST",
 				dataType : 'json',
 				data : JSON.parse($("#textget4").val()),
 				url : "${pageContext.request.contextPath}/api/admin/user/",
@@ -347,13 +348,13 @@ li:hover {
 		
 		//List User
 		$("#textget6").val(JSON.stringify({
-			keyword:"R",
+			key:"R",
 			page:1,
 			limit:10
 		}, null, '\t'));
 		function send6() {
 			$.ajax({
-				type : "GET",
+				type : "POST",
 				dataType : 'json',
 				data : JSON.parse($("#textget6").val()),
 				url : "${pageContext.request.contextPath}/api/admin/user/",
